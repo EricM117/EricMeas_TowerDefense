@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public class BalistaTower : Tower
+public class GunTower : Tower
 {
-    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform projectileFirePoint;
 
+    // Update is called once per frame
     protected override void Update()
     {
         base.Update();
@@ -12,9 +13,9 @@ public class BalistaTower : Tower
 
     protected override void FireAt(Enemy target)
     {
-        if (projectilePrefab != null)
+        if (bulletPrefab != null)
         {
-            GameObject projectileInstance = Instantiate(projectilePrefab, projectileFirePoint.position, Quaternion.identity);
+            GameObject projectileInstance = Instantiate(bulletPrefab, projectileFirePoint.position, Quaternion.identity);
             projectileInstance.GetComponent<Projectile>().SetTarget(target.transform);
         }
     }

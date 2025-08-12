@@ -1,7 +1,6 @@
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-public class BalistaProjectile : Projectile
+public class BulletProjectile : Projectile
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()

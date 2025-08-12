@@ -7,6 +7,7 @@ public class TowerPlaceManager : MonoBehaviour
     public Camera MainCamera;
     public LayerMask TileLayer;
     public InputAction PlaceTowerAction;
+    public InputAction RemoveTowerAction;
 
     [SerializeField] private float towerPlacementHeightOffset = 0.2f;
     private GameObject currentTowerPrefabToSpawn;
@@ -46,6 +47,7 @@ public class TowerPlaceManager : MonoBehaviour
     private void OnEnable()
     {
         PlaceTowerAction.Enable();
+        RemoveTowerAction.Enable();
         PlaceTowerAction.performed += OnPlaceTower;
     }
 
@@ -53,11 +55,15 @@ public class TowerPlaceManager : MonoBehaviour
     {
         PlaceTowerAction.performed -= OnPlaceTower;
         PlaceTowerAction.Disable();
+        RemoveTowerAction.Disable();
     }
 
     public void StartPlacingTower(GameObject towerPrefab)
     {
-        if (currentTowerPrefabToSpawn != towerPrefab)
+        Tower tower = towerPrefab.GetComponent<Tower>();
+        int towerCost = tower.Towercost;
+
+        if (currentTowerPrefabToSpawn != towerPrefab && CurrencyManager.instance.SpendCurrency(towerCost))
         {
             isPlacingTower = true;
             currentTowerPrefabToSpawn = towerPrefab;

@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class CannonTower : Tower
 {
-    [SerializeField] GameObject cannonballPrefab;
+    [SerializeField] private GameObject cannonballPrefab;
+    [SerializeField] private Transform projectileFirePoint;
 
     protected override void Update()
     {
@@ -14,7 +15,7 @@ public class CannonTower : Tower
         // Add Cannon Tower firing code
         if (cannonballPrefab != null)
         {
-            GameObject projectileInstance = Instantiate(cannonballPrefab, transform.position, Quaternion.identity);
+            GameObject projectileInstance = Instantiate(cannonballPrefab, projectileFirePoint.position, Quaternion.identity);
             projectileInstance.GetComponent<Projectile>().SetTarget(target.transform);
         }
     }

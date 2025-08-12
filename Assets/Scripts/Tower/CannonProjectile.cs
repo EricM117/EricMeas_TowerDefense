@@ -6,7 +6,7 @@ public class CannonProjectile : Projectile
 {
     [SerializeField] private GameObject explosionEffectPrefab;
     private float cannonProjectileSpeed = 10f;
-    private float explosionRadius = 5f;
+    private float explosionRadius = 3f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
@@ -52,7 +52,7 @@ public class CannonProjectile : Projectile
             Enemy enemy = nearbyEnemies.GetComponent<Enemy>();
             if (enemy != null)
             {
-                Destroy(enemy.gameObject);
+                enemy.TakeDamage(damage);
             }
         }
 

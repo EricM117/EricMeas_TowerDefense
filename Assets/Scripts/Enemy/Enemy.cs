@@ -1,13 +1,20 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    public event Action<int, int> OnHealthChanged;
+
     private NavMeshAgent agent;
     private Animator animator;
     [SerializeField] private Transform endPoint;
     [SerializeField] private string animatorParam_IsWalking;
     [SerializeField] private int damage;
+    [SerializeField] private int maxHealth;
+    [SerializeField] private int moneyAmountDrop;
+    [SerializeField] private float speed;
+    private int currentHealth;
 
     private void Awake()
     {
@@ -19,6 +26,8 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         animator.SetBool(animatorParam_IsWalking, true);
+        currentHealth = maxHealth;
+        agent.speed = speed;
     }
 
     // Update is called once per frame
@@ -37,6 +46,23 @@ public class Enemy : MonoBehaviour
     {
         endPoint = inputEndPoint;
         agent.SetDestination(endPoint.position);
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        if (currentHealth > 0)
+        {
+            currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
+            OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        }
+
+        if (currentHealth <= 0)
+        {
+            CurrencyManager.instance.IncreaseCurrency(moneyAmountDrop);
+            Destroy(gameObject);
+        }
+
+        Debug.Log($"Enemy Current Health: {currentHealth}");
     }
 
 

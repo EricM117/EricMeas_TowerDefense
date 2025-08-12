@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FireCooldown: 1
+  Towercost: 500
   projectilePrefab: {fileID: 2265737045789641271, guid: 72a6a217ac311a748a5338f1d3310e38, type: 3}
   projectileFirePoint: {fileID: 5178503669310536655}
 --- !u!1001 &852287584412462244
